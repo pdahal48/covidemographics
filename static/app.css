@@ -1,0 +1,48 @@
+#counties_list {
+    width: 150px;
+    height: 25px;
+    border-radius: 0px;
+    margin-top: 0px;
+    margin-left: 15px;
+}
+
+#compare #navbar #dataTable-2 {
+    background-color: lightgray;
+}
+
+.demographic{
+    margin-top: 43px;
+}
+
+#topSection {
+    margin-top: 40px;
+}
+
+.text {
+    font-family: 'Segoe UI';
+    color: black;
+    font-size: 1.67rem;    
+}
+
+.county_field {
+    width: 152px;
+    height: 25px;
+    margin-left: 29px;
+}
+
+#counties {
+    float: left;
+    margin-top: 0px;
+}
+
+a {
+    color: black;
+}
+
+a:hover, :active {
+    font-style: none;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    
+}

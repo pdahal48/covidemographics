@@ -1,0 +1,33 @@
+<html>
+<head>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css' rel=stylesheet>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/dataTables.bootstrap4.min.css' rel=stylesheet>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
+    <script src = 'https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js'></script>
+    <script src="https://unpkg.com/jquery"></script>
+    <link rel="stylesheet" href="static/app.css">
+    <title>COVID-19</title>
+
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-lg" id="navbar">
+    <a class="display-3" href="">CoviData</a> 
+    <span class="navbar-nav align-items-bottom mt-5">County Level Covid and Demographics Info</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+
+</head>
+
+<body>
+
+  {% block content %} 
+  {% endblock %}
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/jquery.dataTables.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js'></script>
+  <script src="static/app.js"></script>
+
+</body>
+
+</html>

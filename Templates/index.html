@@ -1,0 +1,96 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row align-items-left">
+    <div class="col-md-2">
+    <div id="topSection">
+            <h2 class="h2 text">Select Location</h2>
+             <form>
+                 {{ form.hidden_tag() }}
+                 {% for field in form if field.widget.input_type != 'hidden' %}
+           
+                 {% if subfield in form.radio %}
+               <tr>
+                   <td>{{ subfield }}</td>
+                   <td>{{ subfield.label }}</td>
+               </tr>
+
+                 {% endif %}
+ 
+                 <div class="form form-group">
+                   <b>{{ field.label }}</b>
+                     {{ field (class_ = 'county_field') }}
+                   <button class="btn btn-sm btn-primary" id= "arrow"><i class="fas fa-caret-right fa-1x"></i></button>
+                 </div>
+ 
+                     {% for error in field.errors %}
+                     <small class="form-text text-danger">
+                       {{ error }}
+                     </small>
+                     {% endfor %}
+ 
+                 {% endfor %} 
+                 
+               <div id="counties">
+               <label for="counties_list"> <b>County: </b> </label>
+               <select name='location' id = 'counties_list'>
+                 <option value ="Select"> Select County </option>
+               </select>
+               <br>
+               <button class="btn btn-success float-right" id="submit" type="submit">Submit</button>
+             </div>
+             </form>
+        </div>
+        </div>
+
+              <div class="col-md-5">
+                <canvas id="myChart"></canvas>
+               </div>
+
+                  <div class="col-md-3 demographic">
+                  <table class="table table-striped " id="dataTable-2">
+                    <tbody>
+                      <h2 class="h2 text text-center"> County Demographics</h2>
+
+                      <tr>
+                        <th scope="row">Population</th>
+                        <td id="population"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Population Density</th>
+                        <td id="population_density"> </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Bachelor's Degree</th>
+                        <td id="education"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Poverty</th>
+                        <td id="poverty"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+        </div>
+        <div class="row justify-content-center text-center">
+          <div class="col-md-8 justify-content-center">
+            <div class='container-fluid' id="statesData">
+              <h2 class="mt-5 h2 text">States Covid Cases Comparision</h2>
+              <table cellspacing=0 class="table border-md table-hover table-inverse table-striped mt-0" id='compare'>
+                  <thead >
+                      <tr>
+                          <th>State
+                          <th>Cases
+                          <th>Deaths
+                          <th>Population
+                          <th>Case Density
+                          <th>Risk Level
+          
+                          <tbody id="info">
+                                  
+                          </tbody> 
+              </table>
+          </div>            </div>
+          </div>
+    {% endblock %}
