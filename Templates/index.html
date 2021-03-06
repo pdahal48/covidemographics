@@ -21,7 +21,6 @@
                  <div class="form form-group">
                    <b>{{ field.label }}</b>
                      {{ field (class_ = 'county_field') }}
-                   <button class="btn btn-sm btn-primary" id= "arrow"><i class="fas fa-caret-right fa-1x"></i></button>
                  </div>
  
                      {% for error in field.errors %}
@@ -38,7 +37,6 @@
                  <option value ="Select"> Select County </option>
                </select>
                <br>
-               <button class="btn btn-success float-right" id="submit" type="submit">Submit</button>
              </div>
              </form>
         </div>

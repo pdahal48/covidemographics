@@ -20,7 +20,7 @@ $(document).ready( async function() {
     $('#poverty').append(`${povertyRate}%`)
 
 
-    $('#arrow').on('click', async function (evt){
+    $('#State').change(async function (evt){
         evt.preventDefault()
         $('#counties').show()
  
@@ -40,7 +40,7 @@ $(document).ready( async function() {
 /*Append demographic information into the Demographics Section */
 function demographicsTable() {
 $(document).ready(function() {
-    $('#submit').on('click', async function(evt) {
+    $('#counties_list').on('change', async function(evt) {
 
         evt.preventDefault()
         showContents()
