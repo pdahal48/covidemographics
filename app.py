@@ -1,6 +1,6 @@
 from flask import Flask, json, render_template, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-from models import Population, connect_db, db, Info, Education, Poverty
+from models import States, connect_db, db, Info
 from forms import SelectLocationForm
 import os
 import requests
@@ -85,6 +85,22 @@ def joint_code(state, county):
 @app.route('/states')
 def table_cases():
     """ returns covid information on a State level """
+
     res = requests.get(API_URL)
+    resp = res.json()
+    return jsonify(resp)
+
+
+@app.route('/counties/<st_id>')
+def counties_cases(st_id):
+    """ returns covid information on a county level """
+
+    state_abbreviation = db.session.query(States.state_abb).filter_by(state=str(st_id)).first()
+    st = state_abbreviation.state_abb
+    # print(jsonify(state_abbreviation))
+
+    COUNTIES_API = f'https://api.covidactnow.org/v2/county/{st}.json?apiKey=b28cd827fcb9481db77660ed3eee9157'
+
+    res = requests.get(COUNTIES_API)
     resp = res.json()
     return jsonify(resp)

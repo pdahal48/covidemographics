@@ -1,18 +1,20 @@
 #This file extracts the information from the Census API and saves it in our database
-from models import Population, db, connect_db, Info, Education, Poverty
+from models import db, connect_db, Info, States
 from app import app
 import requests
 
 db.drop_all()
 db.create_all()
 
-counties_api = 'https://api.census.gov/data/2019/acs/acsse?get=NAME&for=county:*&in=state:*&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
+COUNTIES_API = 'https://api.census.gov/data/2019/acs/acsse?get=NAME&for=county:*&in=state:*&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
+STATES_API = 'https://api.covidactnow.org/v2/states.json?apiKey=b28cd827fcb9481db77660ed3eee9157'
+
 
 # Extracting data for the information table
 def information_table():
     """ Extracts information regarding a specific county including its county code, name and state"""
 
-    res = requests.get(counties_api) 
+    res = requests.get(COUNTIES_API) 
     resp = res.json()
     length = len(resp)
 
@@ -38,6 +40,20 @@ def information_table():
         db.session.add(information)
         db.session.commit()
 
+def state_abb():
+    """ seed states abbreviations into the database """
+
+    res = requests.get(STATES_API)
+    resp = res.json()
+
+    for y in range(1, 53):
+        states_abb = resp[y]['state']
+        state_fips = resp[y]['fips']
+
+        state = States(state=state_fips, state_abb=states_abb)
+        db.session.add(state)
+        db.session.commit()
 
 #Calling all the functions defined above
 information_table()
+state_abb()

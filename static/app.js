@@ -5,6 +5,7 @@ $(document).ready( async function() {
     //default data will be Los Angeles County California with code = 06037
     covidCases('06037')
     retrieveData()
+    countiesData('06')
 
     res = await $.get(`/demographics/06/037`)
         bachelors_degree = res[0]
@@ -23,6 +24,9 @@ $(document).ready( async function() {
     $('#State').change(async function (evt){
         evt.preventDefault()
         $('#counties').show()
+        state = $('#State').val()
+        countiesData(state)
+
  
         state = $('#State').val()
         response = await $.get(`/county/${state}`)    
@@ -43,10 +47,10 @@ $(document).ready(function() {
     $('#counties_list').on('change', async function(evt) {
 
         evt.preventDefault()
-        showContents()
 
         state = $('#State').val()
         county = $('#counties_list').val()
+
         joint_code = await $.get(`/cases/${state}/${county}`)
 
 
@@ -72,6 +76,7 @@ $(document).ready(function() {
         } catch(TypeError) {
             alert('Invalid State/County Combination')
         }
+
     })
 })
 
@@ -179,6 +184,35 @@ $('#compare').DataTable();
 }
 
 
+async function countiesData(st_code) {
+
+    let formattedNumber = ("0" + st_code).slice(-2);
+    resp5 = await $.get(`/counties/${formattedNumber}`)
+    $('#counties_data').empty()
+
+    for (let y = 0; y < 53; y++) {
+
+    county = resp5[y]['county']
+    cases = 10;
+    deaths = 10;
+    population = 10;
+    caseDensity = 10;
+
+    $('#counties_data').append(`
+        <tr>
+            <td> ${county} </td>
+            <td> ${cases} </td>
+            <td> ${deaths} </td>
+            <td> ${population} </td>
+            <td> ${caseDensity} </td>
+        </tr>
+            `)
+}
+$('#counties_cases').DataTable();
+
+}
+
+
 //Helper Functions
 
 /* Empty the demographics area */
@@ -190,9 +224,6 @@ function emptyDom() {
 }
 
 /*show or hide contents after submit button is hit*/
-function showContents(){
-    $('#statesData').show()
-    $('.demographic').show()
-}
 
 demographicsTable()
+
