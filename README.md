@@ -2,8 +2,8 @@
 Covidemographics site provides a one stop access to county demographics and covid cases. Data used on this project are extracted from COVIDACTNOW.ORG and US Census Bureau API
 As I analyzed covid data, I always wonder about the factors that could be driving covid cases in one county vs the other. On this site, Users can not only see the covid cases and deaths but also view county demographics including population, population density, poverty (%), and % of people with at least a bachelor's degree.
 
-##User-Flow
-site is default to Los Angeles County, California. User have an option to change the location using the Select Fields on the field. 
+## User-Flow
+Site is default to Los Angeles County, California. User have an option to change the location using the Select Fields on the field. 
 ___
 List of APIs
 - ED_API = https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50
@@ -14,12 +14,18 @@ List of APIs
 ___
 Here is the schema model. joint_code will be used to access covid information regarding a specific county. 
 ____
-Table to store general location information for API accessibility
+Table to store general location information for API accessibility.
 
 |id|county|state|__county_code__|state_code|__joint_code__
 |--|------|-----|-----------|----------|----------
 |1|Butler|OH|017|39|39017
 ___
+
+A table will also be stored in the DATABASE with state's fips code and state abbreviations for access to COVID API. 
+|id|state|state_abb|
+|--|------|-----|
+|1|39|OH
+
 ___
  Although this information will not be saved in our database because of the file size, here is what I will be grabbing from the COVIDACTNOW API
  
@@ -30,22 +36,5 @@ ___
   For states comparision. I will also be extracting covid information in state level such as cases, deaths, case density, and risk level. 
  ____
  ____
- Three separate tables will be used to county demographics.
- 1. Number of people with at least a bachelors degree
  
-  |id|__county_code__|__state_code__|education(%)
-  |--|-----------|-----------|--------
-  |1|017|39|150000
-  
- 2. Population and Population density (ppl/sq mi)
-
-  |id|**county_code**|__state_code__|pop|pop_den
-  |--|-----------|---|-------|------
-  |1|017|39|383134|815
-
-3. Poverty: measures the % of people living under the poverty threshold
-
-  |id|**county_code**|**state_code**|pov|
-  |--|-----------|---|--------
-  |1|017|39|11
- ____
+  For county demographics information, site will be make a direct request to the API. 
