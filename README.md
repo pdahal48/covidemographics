@@ -1,7 +1,14 @@
-# COVID-API
-This site provides a one stop access to county demographics and covid cases. Data used on this project are extracted from covidactnow.org and US Census Bureau API
+# CoviDemographics
+This site provides a one stop access to county demographics and covid cases. Data used on this project are extracted from COVIDACTNOW.ORG and US Census Bureau API
 
-Here is the tentative schema model. county_code will be used as a FOREIGN Key in all three of county demographics table. joint_code will be used to access covid information regarding a specific county. 
+List of APIs
+    1. ED_API = f'https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
+    2. POP_API = f'https://api.census.gov/data/2019/pep/population?get=DENSITY,POP&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
+    3. POV_API = f'https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
+    4. COVID_API = 'https://api.covidactnow.org/v2/states.json?apiKey=b28cd827fcb9481db77660ed3eee9157'
+
+
+Here is the schema model. joint_code will be used to access covid information regarding a specific county. 
 ____
 Table to store general location information for API accessibility
 
