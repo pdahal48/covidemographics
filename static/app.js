@@ -118,8 +118,7 @@ async function covidCases(joint_code, county_name){
 async function graph_cases(cases_arry, deaths_arry, dates_arry, county_name) {
 
     var ctx = $('#myChart');
-    var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
+    new Chart(ctx, {
     type: 'line',
     data: {
         labels: dates_arry,
@@ -133,7 +132,7 @@ async function graph_cases(cases_arry, deaths_arry, dates_arry, county_name) {
             label: 'Covid deaths over time',
             data: deaths_arry,
             borderColor: [
-                'red'
+                'red',
             ]
             }]
         },
