@@ -45,8 +45,8 @@ def state_abb():
 
     res = requests.get(STATES_API)
     resp = res.json()
-
-    for y in range(1, 53):
+    length = len(resp)
+    for y in range(0, length):
         states_abb = resp[y]['state']
         state_fips = resp[y]['fips']
 

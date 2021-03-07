@@ -5,7 +5,6 @@ $(document).ready( async function() {
     //default data will be Los Angeles County California with code = 06037
     covidCases('06037')
     retrieveData()
-    countiesData('06')
 
     res = await $.get(`/demographics/06/037`)
         bachelors_degree = res[0]
@@ -24,11 +23,9 @@ $(document).ready( async function() {
     $('#State').change(async function (evt){
         evt.preventDefault()
         $('#counties').show()
-        state = $('#State').val()
-        countiesData(state)
 
- 
         state = $('#State').val()
+
         response = await $.get(`/county/${state}`)    
 
         $('#counties_list').empty()
@@ -38,6 +35,9 @@ $(document).ready( async function() {
             )
         }
     })
+
+    $('#counties_cases').DataTable();
+
 })
 
 
@@ -46,13 +46,12 @@ function demographicsTable() {
 $(document).ready(function() {
     $('#counties_list').on('change', async function(evt) {
 
-        evt.preventDefault()
+        // evt.preventDefault()
 
         state = $('#State').val()
         county = $('#counties_list').val()
 
         joint_code = await $.get(`/cases/${state}/${county}`)
-
 
         stringified_code = String(joint_code)
         s_code = stringified_code.substring(0,2)
@@ -157,22 +156,23 @@ async function retrieveData() {
 
     $('#info').empty()
     resp2 = await $.get(`/states`)
+    len = resp2.length
 
-    for (let y = 0; y < 53; y++) {
+    for (let y = 0; y < len; y++) {
 
     riskLevelss = resp2[y]['riskLevels']['overall']
     caseDensitys = Math.round(resp2[y]['metrics']["caseDensity"])
     
     populations = resp2[y]['population']
     states = resp2[y]['state']
-    casess = resp2[y]["actuals"]['cases']
-    deathss = resp2[y]['actuals']['deaths']
+    cases = resp2[y]["actuals"]['cases']
+    deaths = resp2[y]['actuals']['deaths']
 
     $('#info').append(`
         <tr>
             <td> ${states} </td>
-            <td> ${casess} </td>
-            <td> ${deathss} </td>
+            <td> ${cases} </td>
+            <td> ${deaths} </td>
             <td> ${populations} </td>
             <td> ${caseDensitys} </td>
             <td> ${riskLevelss} </td>
@@ -183,37 +183,7 @@ $('#compare').DataTable();
 
 }
 
-
-async function countiesData(st_code) {
-
-    let formattedNumber = ("0" + st_code).slice(-2);
-    resp5 = await $.get(`/counties/${formattedNumber}`)
-    $('#counties_data').empty()
-
-    for (let y = 0; y < 53; y++) {
-
-    county = resp5[y]['county']
-    cases = 10;
-    deaths = 10;
-    population = 10;
-    caseDensity = 10;
-
-    $('#counties_data').append(`
-        <tr>
-            <td> ${county} </td>
-            <td> ${cases} </td>
-            <td> ${deaths} </td>
-            <td> ${population} </td>
-            <td> ${caseDensity} </td>
-        </tr>
-            `)
-}
-$('#counties_cases').DataTable();
-
-}
-
-
-//Helper Functions
+//Helper Function
 
 /* Empty the demographics area */
 function emptyDom() {

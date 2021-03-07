@@ -97,7 +97,6 @@ def counties_cases(st_id):
 
     state_abbreviation = db.session.query(States.state_abb).filter_by(state=str(st_id)).first()
     st = state_abbreviation.state_abb
-    # print(jsonify(state_abbreviation))
 
     COUNTIES_API = f'https://api.covidactnow.org/v2/county/{st}.json?apiKey=b28cd827fcb9481db77660ed3eee9157'
 
