@@ -4,6 +4,8 @@ As I analyzed covid data, I always wonder about the factors that could be drivin
 
 ## User-Flow
 Site is default to Los Angeles County, California. User have an option to change the location using the Select Fields on the field. 
+
+Site can be accessed at https://covidemographics.herokuapp.com/ 
 ___
 List of APIs
 - ED_API = https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50
