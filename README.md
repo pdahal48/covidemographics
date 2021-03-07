@@ -1,12 +1,15 @@
 # CoviDemographics
-This site provides a one stop access to county demographics and covid cases. Data used on this project are extracted from COVIDACTNOW.ORG and US Census Bureau API
+Covidemographics site provides a one stop access to county demographics and covid cases. Data used on this project are extracted from COVIDACTNOW.ORG and US Census Bureau API
+As I analyzed covid data, I always wonder about the factors that could be driving covid cases in one county vs the other. On this site, Users can not only see the covid cases and deaths but also view county demographics including population, population density, poverty (%), and % of people with at least a bachelor's degree.
 
+##User-Flow
+site is default to Los Angeles County, California. User have an option to change the location using the Select Fields on the field. 
 ___
 List of APIs
-- ED_API = f'https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
-- POP_API = f'https://api.census.gov/data/2019/pep/population?get=DENSITY,POP&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
-- POV_API = f'https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
-- COVID_API = 'https://api.covidactnow.org/v2/states.json?apiKey=b28cd827fcb9481db77660ed3eee9157'
+- ED_API = https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50
+- POP_API = https://api.census.gov/data/2019/pep/population?get=DENSITY,POP&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50
+- POV_API = https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50
+- COVID_API = https://api.covidactnow.org/v2/states.json?apiKey=b28cd827fcb9481db77660ed3eee9157
 
 ___
 Here is the schema model. joint_code will be used to access covid information regarding a specific county. 
