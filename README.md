@@ -1,11 +1,9 @@
 # CoviDemographics
 Covidemographics site provides a one stop access to county demographics and covid cases. Data used on this project are extracted from COVIDACTNOW.ORG and US Census Bureau API
-As I analyzed covid data, I always wonder about the factors that could be driving covid cases in one county vs the other. On this site, Users can not only see the covid cases and deaths but also view county demographics including population, population density, poverty (%), and % of people with at least a bachelor's degree.
+As I analyzed covid data, I always wondered about the factors that could be driving covid cases in one county vs the other. On this site, Users can not only see the covid cases and deaths but also view county demographics including population, population density, poverty (%), and % of people with at least a bachelor's degree.
 
 ## User-Flow
-Site is default to Los Angeles County, California. User have an option to change the location using the Select Fields on the field. 
-
-Site can be accessed at https://covidemographics.herokuapp.com/ 
+Site defaults to Los Angeles County, California. User have an option to change the location using the Select Fields on the field. 
 ___
 List of APIs
 - ED_API = https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50
@@ -40,3 +38,5 @@ ___
  ____
  
   For county demographics information, site will make a direct request to the API. 
+  Site can be accessed at https://covidemographics.herokuapp.com/ 
+
