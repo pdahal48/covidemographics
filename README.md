@@ -39,4 +39,4 @@ ___
  ____
  ____
  
-  For county demographics information, site will be make a direct request to the API. 
+  For county demographics information, site will make a direct request to the API. 
