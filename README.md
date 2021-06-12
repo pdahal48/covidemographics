@@ -38,5 +38,6 @@ ___
  ____
  
   For county demographics information, site will make a direct request to the API. 
+  
   Site can be accessed at https://covidemographics.herokuapp.com/ 
 
