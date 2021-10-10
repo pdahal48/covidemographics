@@ -1,15 +1,12 @@
 /*Append counties into SelectField */
 $(document).ready( async function() {
     $('#counties').hide()
+
     //default data will be Los Angeles County California with code = 06037
     covidCases('06037')
     retrieveData()
-    console.log(`Helooo`)
 
     res = await $.get(`/demographics/06/037`);
-    console.log(`res is`, res)
-    console.log(`hi`)
-
     appendInfo(res);
 
     $('#State').on('change', async function (evt){
@@ -48,10 +45,7 @@ $(document).ready(function() {
         }
         
         res = await $.get(`/demographics/${state}/${county}`)
-        console.log(`result is `, res)
         joint_code = await $.get(`/cases/${state}/${county}`)
-        console.log(`jointCode is `, joint_code)
-
 
         covidCases(joint_code[0], joint_code[1] )
         try {
