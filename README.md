@@ -1,6 +1,6 @@
 # CoviDemographics
  
- Site can be accessed at https://covidemographics.herokuapp.com/ 
+ Site can be accessed at https://covidinfosite.herokuapp.com/
 
 Covidemographics site provides a one stop access to county demographics and covid cases. Data used on this project are extracted from COVIDACTNOW.ORG and US Census Bureau API
 As I analyzed covid data, I always wondered about the factors that could be driving covid cases in one county vs the other. On this site, Users can not only see the covid cases and deaths but also view county demographics including population, population density, poverty (%), and % of people with at least a bachelor's degree.
