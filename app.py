@@ -6,7 +6,7 @@ import os
 import requests
 
 app = Flask(__name__, template_folder='Templates/')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres:///covid_2')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgres:///covid')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', 'secretkey')
@@ -41,25 +41,11 @@ def states_page(state_code):
 def demographics(state, county):
     """ returns demographic information regarding a county"""
 
-    ED_API = f'https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
-    POP_API = f'https://api.census.gov/data/2019/pep/population?get=DENSITY,POP&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
-    POV_API = f'https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50'
-
-    res = requests.get(ED_API)
-    resp = res.json()
-    ed = resp[1][1]
-
-    res2 = requests.get(POP_API)
-    resp2 = res2.json()
-    pop = resp2[1][1]
-    pop_den = resp2[1][0]
-
-    res3 = requests.get(POV_API)
-    resp3 = res3.json()
-    response_length = len(resp3)
-    pov = resp3[response_length-1][1]
-
-    return jsonify(ed, pop, pov, pop_den)
+    ed = requests.get(f'https://api.census.gov/data/2019/acs/acsse?get=NAME,K201501_007E&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50')
+    pov = requests.get(f'https://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVRTALL_PT&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50&time=2019')
+    pop = requests.get(f'https://api.census.gov/data/2019/pep/population?get=DENSITY,POP&for=county:{county}&in=state:{state}&key=9459a79ef95b98b7009a83c5ba3d94c682f72e50')
+    
+    return jsonify(ed.json(), pov.json(), pop.json())
 
 
 @app.route('/cases/<joint_code>')

@@ -1,31 +1,22 @@
 /*Append counties into SelectField */
 $(document).ready( async function() {
     $('#counties').hide()
-
     //default data will be Los Angeles County California with code = 06037
     covidCases('06037')
     retrieveData()
+    console.log(`Helooo`)
 
-    res = await $.get(`/demographics/06/037`)
-        bachelors_degree = res[0]
-        povertyRate = res[2]
-        population = res[1]
-        population_density = res[3]
-        educatedRate = Math.round((bachelors_degree/population)*100)
-        emptyDom()
+    res = await $.get(`/demographics/06/037`);
+    console.log(`res is`, res)
+    console.log(`hi`)
 
-    $('#education').append(`${educatedRate}%`)
-    $('#population').append(population)
-    $('#population_density').append(Math.round(population_density))
-    $('#poverty').append(`${povertyRate}%`)
+    appendInfo(res);
 
-
-    $('#State').change(async function (evt){
+    $('#State').on('change', async function (evt){
         evt.preventDefault()
         $('#counties').show()
-
+ 
         state = $('#State').val()
-
         response = await $.get(`/county/${state}`)    
 
         $('#counties_list').empty()
@@ -36,46 +27,38 @@ $(document).ready( async function() {
         }
     })
 
-    $('#counties_cases').DataTable();
-
 })
-
 
 /*Append demographic information into the Demographics Section */
 function demographicsTable() {
 $(document).ready(function() {
     $('#counties_list').on('change', async function(evt) {
 
-        // evt.preventDefault()
+        evt.preventDefault()
+        showContents()
 
         state = $('#State').val()
+        if (state.length < 2) {
+            state = '0' + state;
+        }
+
         county = $('#counties_list').val()
-
+        if (county.length < 3) {
+            county = '0' + county;
+        }
+        
+        res = await $.get(`/demographics/${state}/${county}`)
+        console.log(`result is `, res)
         joint_code = await $.get(`/cases/${state}/${county}`)
+        console.log(`jointCode is `, joint_code)
 
-        stringified_code = String(joint_code)
-        s_code = stringified_code.substring(0,2)
-        c_code = stringified_code.substring(2,5)
-
-        res = await $.get(`/demographics/${s_code}/${c_code}`)
 
         covidCases(joint_code[0], joint_code[1] )
         try {
-        bachelors_degree = res[0]
-        povertyRate = res[2]
-        population = res[1]
-        population_density = res[3]
-        educatedRate = Math.round((bachelors_degree/population)*100)
-        emptyDom()
-
-        $('#education').append(`${educatedRate}%`)
-        $('#population').append(population)
-        $('#population_density').append(Math.round(population_density))
-        $('#poverty').append(`${povertyRate}%`)
+        appendInfo(res)
         } catch(TypeError) {
             alert('Invalid State/County Combination')
         }
-
     })
 })
 
@@ -118,7 +101,8 @@ async function covidCases(joint_code, county_name){
 async function graph_cases(cases_arry, deaths_arry, dates_arry, county_name) {
 
     var ctx = $('#myChart');
-    new Chart(ctx, {
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: dates_arry,
@@ -132,7 +116,7 @@ async function graph_cases(cases_arry, deaths_arry, dates_arry, county_name) {
             label: 'Covid deaths over time',
             data: deaths_arry,
             borderColor: [
-                'red',
+                'red'
             ]
             }]
         },
@@ -155,23 +139,22 @@ async function retrieveData() {
 
     $('#info').empty()
     resp2 = await $.get(`/states`)
-    len = resp2.length
 
-    for (let y = 0; y < len; y++) {
+    for (let y = 0; y < 53; y++) {
 
     riskLevelss = resp2[y]['riskLevels']['overall']
     caseDensitys = Math.round(resp2[y]['metrics']["caseDensity"])
     
     populations = resp2[y]['population']
     states = resp2[y]['state']
-    cases = resp2[y]["actuals"]['cases']
-    deaths = resp2[y]['actuals']['deaths']
+    casess = resp2[y]["actuals"]['cases']
+    deathss = resp2[y]['actuals']['deaths']
 
     $('#info').append(`
         <tr>
             <td> ${states} </td>
-            <td> ${cases} </td>
-            <td> ${deaths} </td>
+            <td> ${casess} </td>
+            <td> ${deathss} </td>
             <td> ${populations} </td>
             <td> ${caseDensitys} </td>
             <td> ${riskLevelss} </td>
@@ -182,7 +165,8 @@ $('#compare').DataTable();
 
 }
 
-//Helper Function
+
+//Helper Functions
 
 /* Empty the demographics area */
 function emptyDom() {
@@ -193,6 +177,24 @@ function emptyDom() {
 }
 
 /*show or hide contents after submit button is hit*/
+function showContents(){
+    $('#statesData').show()
+    $('.demographic').show()
+}
+
+function appendInfo(res) {
+    emptyDom()
+    console.log(res)
+    educatedCount = res[0][1][1]
+    educatedRate = Math.round((educatedCount/res[2][1][1])*100)
+    povertyRate = res[1][1][1]
+    population = res[2][1][1]
+    population_density = res[2][1][0]
+
+    $('#education').append(`${educatedRate}%`)
+    $('#population').append(population)
+    $('#population_density').append(Math.round(population_density))
+    $('#poverty').append(`${povertyRate}%`)
+}
 
 demographicsTable()
-
